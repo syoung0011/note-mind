@@ -20,7 +20,7 @@ onMounted(async () => {
       throw new Error('后端返回了未知状态')
     }
 
-    backendStatus.value = '后端连接正常'
+    backendStatus.value = `${data.service} 连接正常`
     connectionState.value = 'success'
   } catch (error) {
     backendStatus.value = '后端连接失败'
