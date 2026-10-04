@@ -10,6 +10,13 @@ class NoteCreate(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
 
+class NoteUpdate(BaseModel):
+    title: str = Field(min_length=1, max_length=200)
+    content: str = Field(min_length=1)
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
 class NotePublic(BaseModel):
     id: int
     title: str
