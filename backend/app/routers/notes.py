@@ -8,6 +8,7 @@ from app.database import get_db
 from app.models import Note, User
 from app.routers.auth import get_current_user
 from app.schemas import NoteCreate, NotePublic, NoteUpdate
+from app.services import rebuild_note_chunks
 
 router = APIRouter(
     prefix="/api/notes",
@@ -32,6 +33,8 @@ def create_note(
         content=note_in.content,
     )
     db.add(note)
+    db.flush()
+    rebuild_note_chunks(db, note)
     db.commit()
     db.refresh(note)
     return note
@@ -105,6 +108,7 @@ def update_note(
 
     note.title = note_in.title
     note.content = note_in.content
+    rebuild_note_chunks(db, note)
     db.commit()
     db.refresh(note)
     return note
