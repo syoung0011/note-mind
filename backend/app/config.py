@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     dashscope_base_url: str | None = None
     embedding_model: str = "text-embedding-v4"
     embedding_dimensions: int = 1024
+    chat_model: str = "qwen-plus"
 
     model_config = SettingsConfigDict(
         env_file=BACKEND_DIR / ".env",
