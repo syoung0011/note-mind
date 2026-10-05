@@ -1,10 +1,8 @@
 import { getToken } from '@/services/auth'
 
-const API_BASE_URL = 'http://127.0.0.1:8000'
-
 async function requestNotes(path = '', options = {}) {
   const token = getToken()
-  const response = await fetch(`${API_BASE_URL}/api/notes${path}`, {
+  const response = await fetch(`/api/notes${path}`, {
     ...options,
     headers: {
       ...options.headers,
