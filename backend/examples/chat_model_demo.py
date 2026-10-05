@@ -12,7 +12,9 @@ def main() -> None:
         content="NoteMind 使用 FastAPI 构建后端 API。",
         embedding=[1.0, 0.0],
     )
-    results = [RetrievedChunk(chunk=chunk, score=0.99)]
+    results = [
+        RetrievedChunk(chunk=chunk, note_title="后端框架笔记", score=0.99)
+    ]
 
     answer = generate_answer("NoteMind 使用什么框架构建后端？", results)
 

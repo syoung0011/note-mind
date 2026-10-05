@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     embedding_model: str = "text-embedding-v4"
     embedding_dimensions: int = 1024
     chat_model: str = "qwen-plus"
+    retrieval_min_score: float = 0.50
 
     model_config = SettingsConfigDict(
         env_file=BACKEND_DIR / ".env",

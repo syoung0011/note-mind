@@ -12,7 +12,7 @@ def make_result(chunk_id: int, content: str, score: float) -> RetrievedChunk:
         content=content,
         embedding=[1.0, 0.0],
     )
-    return RetrievedChunk(chunk=chunk, score=score)
+    return RetrievedChunk(chunk=chunk, note_title="FastAPI 学习笔记", score=score)
 
 
 def main() -> None:
