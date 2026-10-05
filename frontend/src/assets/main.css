@@ -1,7 +1,11 @@
 @import './base.css';
 
 #app {
-  display: grid;
   min-height: 100vh;
-  place-items: center;
+}
+
+.page-card {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
 }
