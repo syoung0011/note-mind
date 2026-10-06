@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.config import settings
 from app.routers.auth import router as auth_router
 from app.routers.chat import router as chat_router
 from app.routers.notes import router as notes_router
@@ -9,7 +10,7 @@ app = FastAPI(title="NoteMind API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5173", "http://127.0.0.1:5174"],
+    allow_origins=settings.allowed_cors_origins,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )

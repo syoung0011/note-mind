@@ -1,5 +1,7 @@
 import { ref } from 'vue'
 
+import { apiUrl } from '@/services/api'
+
 const TOKEN_KEY = 'notemind_access_token'
 
 export const currentUser = ref(null)
@@ -23,7 +25,7 @@ export async function restoreAuth() {
   }
 
   try {
-    const response = await fetch('/api/auth/me', {
+    const response = await fetch(apiUrl('/api/auth/me'), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -55,7 +57,7 @@ export async function login(username, password) {
   formData.set('username', username)
   formData.set('password', password)
 
-  const response = await fetch('/api/auth/login', {
+  const response = await fetch(apiUrl('/api/auth/login'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

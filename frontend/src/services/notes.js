@@ -1,8 +1,9 @@
 import { getToken } from '@/services/auth'
+import { apiUrl } from '@/services/api'
 
 async function requestNotes(path = '', options = {}) {
   const token = getToken()
-  const response = await fetch(`/api/notes${path}`, {
+  const response = await fetch(apiUrl(`/api/notes${path}`), {
     ...options,
     headers: {
       ...options.headers,
