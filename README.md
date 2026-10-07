@@ -13,6 +13,8 @@ NoteMind 是一个面向个人学习场景的 AI 笔记应用。
 
 课程状态只在 [lesson/README.md](lesson/README.md) 中维护，避免多处记录不一致。
 
+课程 MVP 已完成，当前进入按版本推进的产品迭代阶段。短期目标、优先级和后续方向见 [产品迭代路线](docs/product-roadmap.md)。
+
 ## 使用 Docker Compose 启动
 
 前置条件：已安装并启动 Docker Desktop，或具备兼容的 Docker Engine 与 Docker Compose。
@@ -65,7 +67,7 @@ note-mind/
 ├── backend/       FastAPI 后端（对应课程开始时创建）
 ├── frontend/      Vue 3 前端（对应课程开始时创建）
 ├── docs/          产品需求、学习规则和待办事项
-├── lesson/        每一课的学习记录
+├── lesson/        按产品版本整理的课程与学习记录
 ├── .gitignore      Git 忽略规则（第 1 课创建）
 └── README.md
 ```
