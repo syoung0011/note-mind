@@ -77,3 +77,59 @@ note-mind/
 - 每节课采用“分析与分工 → 学习者实现 → AI 检查整改 → 验收总结”的流程。
 - 未完成验收、总结和 Git 提交，不进入下一课。
 - AI 可以帮助执行，但重要命令和原理必须记录下来。
+
+## 在线演示
+
+- 前端：<https://notemind-web-syoung0011.onrender.com>
+- API 文档：<https://notemind-api-syoung0011.onrender.com/docs>
+- 健康检查：<https://notemind-api-syoung0011.onrender.com/health>
+
+Render 免费 Web Service 闲置后会休眠，首次访问可能需要等待约一分钟。免费 PostgreSQL 会在创建 30 天后过期，这套环境仅用于学习和短期演示，不保存重要数据。
+
+## 交付前检查
+
+在 `backend` 目录执行后端测试：
+
+```powershell
+pip install -r requirements-dev.txt
+python -m pytest -q
+```
+
+在 `frontend` 目录执行生产构建：
+
+```powershell
+npm ci
+npm run build
+```
+
+在项目根目录检查 Compose 配置：
+
+```powershell
+docker compose config --quiet
+```
+
+当前基础自动化测试覆盖健康检查、注册登录、跨用户笔记隔离和 RAG 检索阈值。真实模型调用、浏览器流程和部署环境仍需人工验收。
+
+## 部署方式
+
+### Render
+
+根目录 `render.yaml` 声明静态前端、Docker 后端和托管 PostgreSQL。将仓库连接到 Render Blueprint，并只在 Render Environment 中填写真实的 `DASHSCOPE_API_KEY` 和 `DASHSCOPE_BASE_URL`。
+
+粘贴环境变量时应删除首尾空格和换行。模型服务地址中混入换行会让创建笔记时的 Embedding 请求报 `InvalidURL`。
+
+### Linux 服务器
+
+Ubuntu 服务器可以直接使用根目录 `compose.yaml`。复制两个环境模板并填写真实配置：
+
+```bash
+cp .env.example .env
+cp backend/.env.example backend/.env
+chmod 600 .env backend/.env
+sudo docker compose up --build -d
+sudo docker compose ps
+```
+
+中国大陆云服务器无法稳定访问 Docker Hub、PyPI 或 npm 时，可以在根目录 `.env` 中设置对应镜像地址；这些地址会作为构建参数传入，不影响其他环境使用默认官方源。
+
+公网只需开放前端的 80/443 端口。后端宿主机端口只绑定 `127.0.0.1:8000`，PostgreSQL 不发布宿主机端口。没有 HTTPS 时只能用于临时技术验收，不应输入真实或复用密码。
