@@ -74,29 +74,7 @@ h1 {
   gap: 0.75rem;
 }
 
-input,
-button {
-  min-height: 2.75rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 0.5rem;
-  padding: 0.65rem 0.75rem;
-  font: inherit;
-}
-
 button {
   margin-top: 0.5rem;
-  border-color: #2563eb;
-  color: white;
-  background: #2563eb;
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: wait;
-  opacity: 0.65;
-}
-
-.error-message {
-  color: #b91c1c;
 }
 </style>

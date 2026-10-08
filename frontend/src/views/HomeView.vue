@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { currentUser, logout } from '@/services/auth'
+import { logout } from '@/services/auth'
 import {
   createNote,
   deleteNote,
@@ -134,9 +134,7 @@ onMounted(loadNotes)
   <main class="notes-page">
     <header class="page-header">
       <div>
-        <p class="eyebrow">NoteMind</p>
         <h1>我的笔记</h1>
-        <p v-if="currentUser">当前用户：{{ currentUser.username }}</p>
       </div>
       <button class="secondary-button" type="button" @click="handleLogout">
         退出登录
@@ -222,14 +220,15 @@ onMounted(loadNotes)
 
 <style scoped>
 .notes-page {
-  max-width: 1080px;
+  max-width: var(--content-width);
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 2rem var(--space-page);
 }
 
 .page-header {
   display: flex;
   align-items: flex-start;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 2rem;
@@ -240,12 +239,6 @@ onMounted(loadNotes)
   margin: 0 0 0.75rem;
 }
 
-.eyebrow {
-  margin: 0 0 0.25rem;
-  color: #2563eb;
-  font-weight: 700;
-}
-
 .notes-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
@@ -254,9 +247,10 @@ onMounted(loadNotes)
 
 .panel {
   border: 1px solid #dbe3ef;
-  border-radius: 0.75rem;
+  min-width: 0;
+  border-radius: var(--radius-panel);
   padding: 1.25rem;
-  background: white;
+  background: var(--color-surface);
 }
 
 .create-form,
@@ -266,39 +260,8 @@ onMounted(loadNotes)
   gap: 0.75rem;
 }
 
-input,
-textarea,
-button {
-  border: 1px solid #cbd5e1;
-  border-radius: 0.5rem;
-  padding: 0.65rem 0.75rem;
-  font: inherit;
-}
-
-textarea {
-  resize: vertical;
-}
-
-button {
-  border-color: #2563eb;
-  color: white;
-  background: #2563eb;
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: wait;
-  opacity: 0.65;
-}
-
-.secondary-button {
-  border-color: #475569;
-  background: #475569;
-}
-
 .error-message {
   margin-bottom: 1rem;
-  color: #b91c1c;
 }
 
 .notes-list {
@@ -323,7 +286,8 @@ button:disabled {
 }
 
 .note-card span {
-  color: #475569;
+  color: var(--color-muted);
+  overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
 
@@ -333,12 +297,12 @@ button:disabled {
 
 .form-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
 }
 
-.danger-button {
-  border-color: #b91c1c;
-  background: #b91c1c;
+.note-card:hover:not(:disabled) {
+  background: var(--color-background);
 }
 
 @media (max-width: 760px) {
