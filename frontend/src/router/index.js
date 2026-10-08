@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
-import { currentUser, isAuthReady, restoreAuth } from '@/services/auth'
+import { currentUser, getToken, isAuthReady, restoreAuth } from '@/services/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,7 +29,16 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   if (!isAuthReady.value) {
-    await restoreAuth()
+    try {
+      const hadToken = Boolean(getToken())
+      const user = await restoreAuth()
+      if (hadToken && !user && to.meta.requiresAuth) {
+        return { name: 'login', query: { reason: 'expired' } }
+      }
+    } catch {
+      // 暂时无法确认身份时不进入受保护页面；保留 Token 供刷新后重试。
+      return { name: 'login', query: { reason: 'unavailable' } }
+    }
   }
 
   if (to.meta.requiresAuth && !currentUser.value) {

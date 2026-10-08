@@ -115,16 +115,19 @@ async function handleDelete() {
 
 async function handleRequestError(error) {
   if (error.status === 401) {
-    await handleLogout()
+    logout()
+    await router.replace({ name: 'login', query: { reason: 'expired' } })
     return
   }
 
-  errorMessage.value = error.message
+  errorMessage.value = error instanceof TypeError
+    ? '无法连接笔记服务，请检查网络或稍后重试'
+    : error.message || '请求失败，请稍后重试'
 }
 
 async function handleLogout() {
   logout()
-  await router.push({ name: 'login' })
+  await router.replace({ name: 'login' })
 }
 
 onMounted(loadNotes)
