@@ -51,6 +51,30 @@ export function logout() {
   currentUser.value = null
 }
 
+export async function register(username, password) {
+  const requestBody = JSON.stringify({ username, password })
+
+  const response = await fetch(apiUrl('/api/auth/register'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: requestBody,
+  })
+
+  if (!response.ok) {
+    if (response.status === 409) {
+      throw new Error('用户名已被使用，请换一个')
+    }
+    if (response.status === 422) {
+      throw new Error('请检查用户名和密码是否符合要求')
+    }
+    throw new Error('注册失败，请稍后重试')
+  }
+
+  return response.json()
+}
+
 export async function login(username, password) {
   const formData = new URLSearchParams()
 

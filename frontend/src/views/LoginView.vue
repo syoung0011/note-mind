@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 
 import { login } from '@/services/auth'
 
 const router = useRouter()
+const route = useRoute()
 const username = ref('')
 const password = ref('')
 const errorMessage = ref('')
@@ -28,6 +29,10 @@ async function handleSubmit() {
 <template>
   <main class="page-card">
     <h1>登录 NoteMind</h1>
+
+    <p v-if="route.query.registered === '1'" role="status">
+      注册成功，请使用新账号登录。
+    </p>
 
     <form class="login-form" @submit.prevent="handleSubmit">
       <label for="username">用户名</label>
@@ -61,6 +66,9 @@ async function handleSubmit() {
         {{ isSubmitting ? '正在登录…' : '登录' }}
       </button>
     </form>
+    <p class="register-link">
+      还没有账号？<RouterLink :to="{ name: 'register' }">创建账号</RouterLink>
+    </p>
   </main>
 </template>
 
@@ -76,5 +84,9 @@ h1 {
 
 button {
   margin-top: 0.5rem;
+}
+
+.register-link {
+  margin-top: 1rem;
 }
 </style>
