@@ -12,6 +12,7 @@ const errorMessage = ref('')
 const isSubmitting = ref(false)
 
 async function handleSubmit() {
+  if (isSubmitting.value) return
   errorMessage.value = ''
   isSubmitting.value = true
 
@@ -19,7 +20,9 @@ async function handleSubmit() {
     await login(username.value, password.value)
     await router.push({ name: 'home' })
   } catch (error) {
-    errorMessage.value = error.message
+    errorMessage.value = error instanceof TypeError
+      ? '无法连接登录服务，请检查网络或稍后重试'
+      : error.message || '登录失败，请稍后重试'
   } finally {
     isSubmitting.value = false
   }
@@ -29,6 +32,14 @@ async function handleSubmit() {
 <template>
   <main class="page-card">
     <h1>登录 NoteMind</h1>
+
+    <p v-if="route.query.reason === 'expired'" role="status">
+      登录状态已失效，请重新登录。
+    </p>
+
+    <p v-if="route.query.reason === 'unavailable'" role="status">
+      暂时无法确认登录状态，请检查网络后刷新页面，或重新登录。
+    </p>
 
     <p v-if="route.query.registered === '1'" role="status">
       注册成功，请使用新账号登录。
@@ -40,9 +51,10 @@ async function handleSubmit() {
         minlength="3"
         maxlength="50"
         id="username"
-        v-model="username"
+        v-model.trim="username"
         name="username"
         autocomplete="username"
+        :disabled="isSubmitting"
         required
       />
 
@@ -55,6 +67,7 @@ async function handleSubmit() {
         name="password"
         type="password"
         autocomplete="current-password"
+        :disabled="isSubmitting"
         required
       />
 
