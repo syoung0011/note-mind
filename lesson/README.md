@@ -7,7 +7,7 @@ NoteMind 的学习记录按产品次版本分目录保存。Git 标签负责冻�
 | 版本 | 状态 | 目标 | 课程入口 |
 | --- | --- | --- | --- |
 | v0.1 MVP | 已完成 | 从零跑通全栈、RAG、测试与部署 | [v0.1-mvp/README.md](v0.1-mvp/README.md) |
-| v0.2 产品化 | 未开始 | 补齐产品入口、页面骨架和基础反馈 | [v0.2-product/README.md](v0.2-product/README.md) |
+| v0.2 产品化 | 进行中（发布收尾） | 补齐产品入口、页面骨架和基础反馈 | [v0.2-product/README.md](v0.2-product/README.md) |
 
 ## 课程目录规则
 
@@ -31,4 +31,6 @@ NoteMind v0.2 第01课：MVP定档与Git分支协作
 
 当前短期目标和优先级见 [产品迭代路线](../docs/product-roadmap.md)。
 
-下一课准确会话名称：`NoteMind v0.2 第01课：MVP定档与Git分支协作`
+当前课程会话名称：`NoteMind v0.2 第06课：基础反馈、回归测试与版本发布`。
+
+v0.2 发布与定档后再确定 v0.3 的课程范围和会话名称，当前不提前开启下一版本。
